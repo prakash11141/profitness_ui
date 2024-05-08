@@ -1,0 +1,8 @@
+#root {
+  margin: 0;
+  text-align: center;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  min-height: 90vh;
+}
