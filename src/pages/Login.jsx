@@ -24,6 +24,12 @@ const Login = () => {
     },
     onSuccess: (response) => {
       console.log(response);
+      //save token
+      localStorage.setItem("token", response?.data?.token);
+      localStorage.setItem("userRole", response?.data?.user?.role);
+      localStorage.setItem("firstName", response?.data?.user?.firstName);
+      localStorage.setItem("lastName", response?.data?.user?.lastName);
+
       navigate("/home");
     },
     onError: (error) => {

@@ -15,6 +15,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LogoutConfirmationDialog from "./LogoutConfirmationDialog";
 
 const drawerWidth = 240;
 const navItems = [
@@ -76,7 +78,7 @@ const Header = (props) => {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", mb: "2rem" }}>
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
@@ -109,6 +111,7 @@ const Header = (props) => {
               </Button>
             ))}
           </Box>
+          <LogoutConfirmationDialog />
         </Toolbar>
       </AppBar>
       <nav>
