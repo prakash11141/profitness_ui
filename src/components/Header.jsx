@@ -1,140 +1,88 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
-import LogoutIcon from "@mui/icons-material/Logout";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Menu as MenuIcon } from "@mui/icons-material";
 import LogoutConfirmationDialog from "./LogoutConfirmationDialog";
 
-const drawerWidth = 240;
 const navItems = [
-  {
-    id: 1,
-    name: "Home",
-    path: "/home",
-  },
-  {
-    id: 2,
-    name: "Product",
-    path: "/products",
-  },
-  {
-    id: 3,
-    name: "Contact",
-    path: "/contact",
-  },
-  {
-    id: 4,
-    name: "About",
-    path: "/about",
-  },
+  { id: 1, name: "Home", path: "/home" },
+  { id: 2, name: "Product", path: "/products" },
+  { id: 3, name: "Contact", path: "/contact" },
+  { id: 4, name: "About", path: "/about" },
 ];
 
-const Header = (props) => {
+const Header = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const location = useLocation();
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
-  };
-
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        Pro fitness store
-      </Typography>
-      <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item.id} disablePadding>
-            <ListItemButton
-              sx={{ textAlign: "center" }}
-              onClick={() => {
-                navigate(item.path);
-              }}
-            >
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+  const handleToggle = () => setMobileOpen(!mobileOpen);
 
   return (
-    <Box sx={{ display: "flex", mb: "2rem" }}>
-      <CssBaseline />
-      <AppBar component="nav">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+    <>
+      {/* AppBar */}
+      <header className="bg-green-700 text-white shadow-md sticky top-0 z-50 w-full">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+          <h1
+            className="text-2xl font-bold cursor-pointer tracking-wide"
+            onClick={() => navigate("/home")}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
-            Profitness Store
-          </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            ProFitness Store
+          </h1>
+
+          {/* Desktop Nav */}
+          <nav className="hidden sm:flex space-x-6">
             {navItems.map((item) => (
-              <Button
+              <button
                 key={item.id}
-                sx={{ color: "#fff" }}
-                onClick={() => {
-                  navigate(item.path);
-                }}
+                onClick={() => navigate(item.path)}
+                className={`text-white hover:text-yellow-300 transition font-medium ${
+                  location.pathname === item.path
+                    ? "font-bold underline text-yellow-300"
+                    : ""
+                }`}
               >
                 {item.name}
-              </Button>
+              </button>
             ))}
-          </Box>
-          <LogoutConfirmationDialog />
-        </Toolbar>
-      </AppBar>
-      <nav>
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
-    </Box>
+          </nav>
+
+          {/* Logout Button */}
+          <div className="hidden sm:block">
+            <LogoutConfirmationDialog />
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button className="sm:hidden" onClick={handleToggle}>
+            <MenuIcon className="text-white" />
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Drawer */}
+      {mobileOpen && (
+        <div className="sm:hidden bg-white shadow-md fixed top-16 left-0 right-0 z-40 border-t border-gray-200">
+          <nav className="flex flex-col p-4 space-y-4">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  navigate(item.path);
+                  setMobileOpen(false);
+                }}
+                className={`text-left text-gray-800 hover:text-green-700 transition font-medium ${
+                  location.pathname === item.path
+                    ? "font-bold text-green-700 underline"
+                    : ""
+                }`}
+              >
+                {item.name}
+              </button>
+            ))}
+            <LogoutConfirmationDialog />
+          </nav>
+        </div>
+      )}
+    </>
   );
 };
 

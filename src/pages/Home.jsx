@@ -1,25 +1,33 @@
-import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 const Home = () => {
   const navigate = useNavigate();
+
   return (
-    <Box>
-      <Typography variant="h2">This is Home page</Typography>
-      <Button
-        variant="contained"
-        color="success"
-        onClick={() => {
-          navigate("/about");
-        }}
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-100 to-white px-4">
+      <h1 className="text-4xl sm:text-5xl font-extrabold text-green-700 mb-6 text-center">
+        Welcome to ProFitness Store
+      </h1>
+      <p className="text-lg sm:text-xl text-gray-700 mb-8 max-w-2xl text-center">
+        We offer a wide range of fitness products including equipment, apparel,
+        and supplements to help you achieve your fitness goals.
+      </p>
+
+      <button
+        className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl transition duration-300 shadow-md mb-4"
+        onClick={() => navigate("/about")}
       >
-        about page
-      </Button>
-      <Link to="contact">Go to contact</Link>
-    </Box>
+        About Us
+      </button>
+
+      <Link
+        to="/contact"
+        className="text-green-600 hover:underline text-base font-medium"
+      >
+        Contact Us
+      </Link>
+    </div>
   );
 };
 

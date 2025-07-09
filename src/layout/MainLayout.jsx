@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
@@ -8,24 +8,30 @@ const MainLayout = () => {
   return (
     <Box
       sx={{
-        // width: "100vw",
-        // minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        // justifyContent: "space-between",
-        gap: "2rem",
+        minHeight: "100vh", // Ensures full screen height
       }}
     >
+      {/* Header */}
       <Header />
+
+      {/* Main Content */}
       <Box
         sx={{
-          direction: "row",
-          justifyContent: "center",
+          flexGrow: 1, // Pushes footer to bottom when content is short
+          display: "flex",
+          flexDirection: "column",
           alignItems: "center",
+          justifyContent: "flex-start", // You can use "center" if you want vertical center
+          px: 2,
+          py: 4,
         }}
       >
         <Outlet />
       </Box>
+
+      {/* Footer */}
       <Footer />
     </Box>
   );

@@ -1,7 +1,11 @@
-#root {
+/* #root {
   margin: 0;
   box-sizing: border-box;
   display: grid;
   /* place-items: center; */
-  min-height: 90vh;
-}
+/* min-height: 90vh; */
+/* } */
+@import "tailwindcss";
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
