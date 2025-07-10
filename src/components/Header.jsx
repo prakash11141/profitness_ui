@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import LogoutConfirmationDialog from "./LogoutConfirmationDialog";
+import logo from "../assets/profitnesslogo.jpg"; // Adjust path if needed
 
 const navItems = [
   { id: 1, name: "Home", path: "/home" },
@@ -20,17 +21,22 @@ const Header = () => {
   return (
     <>
       {/* AppBar */}
-      <header className="bg-green-700 text-white shadow-md sticky top-0 z-50 w-full">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1
-            className="text-2xl font-bold cursor-pointer tracking-wide"
+      <header className="bg-blue-700 text-white shadow-md sticky top-0 z-50 w-full">
+        <div className="max-w-7xl mx-auto px-4 py-2 flex items-center h-16 sm:h-20">
+          {/* Logo on the left */}
+          <div
+            className="h-full flex items-center cursor-pointer"
             onClick={() => navigate("/home")}
           >
-            ProFitness Store
-          </h1>
+            <img
+              src={logo}
+              alt="ProFitness Logo"
+              className="h-full aspect-square object-cover rounded-full border-2 border-white"
+            />
+          </div>
 
-          {/* Desktop Nav */}
-          <nav className="hidden sm:flex space-x-6">
+          {/* Desktop Nav pushed to right */}
+          <div className="hidden sm:flex items-center space-x-6 ml-auto">
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -44,15 +50,12 @@ const Header = () => {
                 {item.name}
               </button>
             ))}
-          </nav>
 
-          {/* Logout Button */}
-          <div className="hidden sm:block">
             <LogoutConfirmationDialog />
           </div>
 
-          {/* Mobile Menu Button */}
-          <button className="sm:hidden" onClick={handleToggle}>
+          {/* Mobile Menu Button (only shows on small screens) */}
+          <button className="sm:hidden ml-auto" onClick={handleToggle}>
             <MenuIcon className="text-white" />
           </button>
         </div>
@@ -69,9 +72,9 @@ const Header = () => {
                   navigate(item.path);
                   setMobileOpen(false);
                 }}
-                className={`text-left text-gray-800 hover:text-green-700 transition font-medium ${
+                className={`text-left text-gray-800 hover:text-blue-700 transition font-medium ${
                   location.pathname === item.path
-                    ? "font-bold text-green-700 underline"
+                    ? "font-bold text-blue-700 underline"
                     : ""
                 }`}
               >
